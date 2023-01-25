@@ -17,6 +17,10 @@ export const CartContent = styled(Dialog.Content)`
     font-size: ${({theme}) => theme.fontSize['2xl']};
     color: ${({theme}) => theme.colors.white};
     padding: 2.5rem;
+
+    @media (max-width: 580px){
+      font-size: 1.35rem;
+    }
   };
   > section {
     display: flex;
@@ -27,6 +31,9 @@ export const CartContent = styled(Dialog.Content)`
     flex: 1;
     .texto{
       color: ${({theme}) => theme.colors.white};
+    }
+    div:first-child {
+      margin-top: 2rem;
     }
   }
   @media (max-width: 992px){
@@ -43,6 +50,13 @@ export const CartClose = styled(Dialog.Close)`
   width: 2.5rem;
   top: 2.5rem;
   right: 2.5rem;
+  border: 0;
+
+  @media (max-width: 580px){
+    width: 2.35rem;
+    top: 1rem;
+    right: 1rem;
+  }
 `
 
 export const CartButtonContainer = styled.button`
@@ -57,6 +71,11 @@ export const CartButtonContainer = styled.button`
   border: none;
   background-color: ${({theme}) => theme.colors.white};
   color: ${({theme}) => theme.colors.black};
+
+  @media (max-width: 580px){
+    padding: 1rem;
+  }
+
   svg {
     font-size: 1.65rem;
   }
@@ -75,58 +94,54 @@ export const CartButtonContainer = styled.button`
 
 export const CartProduct = styled.div`
   width: 100%;
+  height: fit-content;
   background-color: ${({theme}) => theme.colors.white};
+  border-radius: 8px;
   padding: 1rem;
   gap: 1.25rem;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  min-height: 5.8125rem;
-  position: relative;
-`
- 
-export const CartProductImage = styled.div`
-  width: 100%;
-  height: 5.125rem;
-  display: flex;
-  justify-content: center;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
   align-items: center;
-  border-radius: 8px;
-  img {
+  position: relative;
+
+  @media (max-width: 580px){
+    grid-template-columns: 1fr 1fr;
+  }
+
+  img{
+    width: 100%;
+    height: 5.125rem;
     object-fit: contain;
   }
-`
 
-export const CartProductDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: "space-between";
-  p {
-    color: ${({theme}) => theme.colors.gray100};
-    font-size: ${({theme}) => theme.fontSize.lg};
-  };
-  strong {
+  span{
     color: ${(props) => props.theme.colors.black};
-    margin-top: 4px;
-    font-size: ${({theme}) => theme.fontSize.lg};
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+
+  strong{
+    color: ${(props) => props.theme.colors.black};
+    font-size: ${({theme}) => theme.fontSize.xl};
     font-weight: bold;
-  };
-  button {
+  }
+
+  .close {
     position: absolute;
     top: -0.5rem;
     right: -0.5rem;
     margin-top: auto;
-    width: max-content;
+    width: 2rem;
     border: none;
-    background: none;
+    background: ${({theme}) => theme.colors.black};
     color: ${({theme}) => theme.colors.white};
     font-size: 1rem;
     font-weight: bold;
-  }`
-
-export interface QuantityInputContainerProps {
-  size: "medium" | "small";
-}
+    z-index: 15;
+    border-radius: 100%;
+    padding: 0.25rem;
+  }
+`
 
 export const ContainerQuantity = styled.div`
 width: 100%;
@@ -142,23 +157,33 @@ strong{
 
 export const ButtonsContainer = styled.div`
 width: 100%;
+display: grid;
 grid-template-columns: repeat(3, 1fr);
 border: 1px solid ${(props) => props.theme.colors.gray};
 border-radius: 8px;
 
 button{
   width: 100%;
-  border-radius: 0 8px;
   border: 1px solid ${(props) => props.theme.colors.gray};
   padding: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: none;
+
+  svg{
+    color: ${({theme}) => theme.colors.black};
+  }
 }
 
 span{
-  font-size: ${({theme}) => theme.fontSize.md};
+  text-align: center;
+  font-size: ${({theme}) => theme.fontSize.lg};
   color: ${({theme}) => theme.colors.black};
+  display: flex;
+    padding: 0.5rem;
+    align-items: center;
+    justify-content: center;
 }
 `
 
@@ -181,26 +206,36 @@ export const CartFinalization = styled.div`
     &:not(:disabled):hover {
       background: ${({theme}) => theme.colors.black};
     }
+    a{
+      text-decoration: none;
+      color: ${({theme}) => theme.colors.white};
+    }
   }
 `
 
 export const FinalizationDetails = styled.div`
   display: flex;
-  flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   gap: 8px;
   margin-bottom: 1.5rem;
   padding: 0 2.5rem;
-  div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  @media (max-width: 580px){
+        margin-top: 1rem;
+      }
     p {
       font-size: ${({theme}) => theme.fontSize['2xl']};
       color: ${({theme}) => theme.colors.white};
+
+      @media (max-width: 580px){
+        font-size: 1.35rem;
+      }
     };
     span{
       color: ${({theme}) => theme.colors.white};
       font-size: ${({theme}) => theme.fontSize['2xl']};
+      @media (max-width: 580px){
+        font-size: 1.35rem;
+      }
     }
-  }
 `

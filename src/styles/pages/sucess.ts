@@ -46,7 +46,7 @@ export const ImageContainer = styled.div`
   width: 100%;
   max-width: 140px;
   height: 130px;
-  background: linear-gradient(180deg, #1EA483 0%, #7465D4 100%);
+  background: ${({theme}) => theme.colors.white};
   border-radius: 100%;
   display: flex;
   justify-content: center;
@@ -55,6 +55,6 @@ export const ImageContainer = styled.div`
   box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.8);
   img {
     object-fit: contain;
-    padding: 0.35rem;
+    padding: 1rem;
   }
 `

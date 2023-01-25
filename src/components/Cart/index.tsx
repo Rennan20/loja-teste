@@ -1,5 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog';
-import { CartClose, CartContent, CartProductDetails, CartFinalization, CartProduct, CartProductImage, FinalizationDetails, CartButtonContainer, ContainerQuantity, ButtonsContainer } from "./styles";
+import { CartClose, CartContent, CartFinalization, CartProduct, FinalizationDetails, CartButtonContainer, ContainerQuantity, ButtonsContainer } from "./styles";
 import { Minus, Plus, ShoppingCart , X } from "phosphor-react";
 import Image from "next/image";
 import { useCart } from "../../hooks/useCart";
@@ -10,10 +10,12 @@ import Link from 'next/link';
 export function Cart(){
   const { cartItems, cartTotal, removeProductFromCart, changeCartItemQuantity } = useCart();
   const cartItemsQuantity = cartItems.length;
-  const formattedCartTotal = Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  }).format(cartTotal);
+  const formatCurrency = (value: number) => {
+    return value.toLocaleString("pt-br", {
+      style: "currency",
+      currency: "BRL",
+    });
+  };
 
   return(
     <Dialog.Root>
@@ -33,35 +35,25 @@ export function Cart(){
               { cartItemsQuantity <= 0 && <p className="texto">Parece que seu carrinho está vazio :(</p>}
               {cartItems.map((cartItem) => (
                 <CartProduct key={cartItem.id}>
-                  <CartProductImage>
-                    <Image width={180} height={93} src={cartItem.photo} alt="" />
-                  </CartProductImage>
-                  <CartProductDetails>
-                    <p>{cartItem.name}</p>
-                    <strong>{cartItem.price}</strong>
-                    <ContainerQuantity>
+                   <Image width={180} height={93} src={cartItem.photo} alt="" />
+                   <span>{cartItem.brand} {cartItem.name}</span>
+                   <ContainerQuantity>
                       <strong>QTD:</strong>
                       <ButtonsContainer>
-                        <button onClick={() => changeCartItemQuantity(cartItem.id, "decrease")} disabled={cartItem.quantity <= 1}><Minus size={14} weight="fill" /></button>
+                        <button onClick={() => changeCartItemQuantity(cartItem.id, "decrease")} disabled={cartItem.quantity <= 1}><Minus size={15} weight="fill" /></button>
                         <span>{cartItem.quantity}</span>
-                        <button onClick={() => changeCartItemQuantity(cartItem.id, "increase")}><Plus size={14} weight="fill" /></button>
+                        <button onClick={() => changeCartItemQuantity(cartItem.id, "increase")}><Plus size={15} weight="fill" /></button>
                       </ButtonsContainer>
                     </ContainerQuantity>
-                    <button onClick={() => removeProductFromCart(cartItem.id)}><X size="20" weight="bold" /> </button>
-                  </CartProductDetails>
+                    <strong>{formatCurrency(cartItem.price * cartItem.quantity)}</strong>
+                    <button className='close' onClick={() => removeProductFromCart(cartItem.id)}><X size="20" weight="bold" /> </button>
                 </CartProduct>
               ))}
             </section>
             <CartFinalization>
               <FinalizationDetails>
-                <div>
-                  <span>Quantidade:</span>
-                  <p>{cartItemsQuantity} {cartItemsQuantity === 1 ? 'itens' : 'item'}</p>
-                </div>
-                <div>
                   <span>Valor Total:</span>
-                  <p>{formattedCartTotal}</p>
-                </div>
+                  <p>{formatCurrency(cartTotal)}</p>
               </FinalizationDetails>
               <button disabled={cartItemsQuantity <= 0}>
                 <Link href="sucess">Finalizar</Link>

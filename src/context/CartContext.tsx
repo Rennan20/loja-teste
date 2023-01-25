@@ -39,16 +39,35 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     }
     return []
   });
+  const [quantity, setQuantity] = useState(1);
+
   useEffect(() => {
     localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const cartTotal = cartItems.reduce((total, product) => {
-    return total + product.price;
+  const cartTotal = cartItems.reduce((total, cartItem) => {
+    return total + cartItem.price * cartItem.quantity;
   }, 0);
 
   function addProductToCart(product: IProduct) {
-    setCartItems((state) => [...state, product]);
+    const productToAdd = {
+      ...product,
+      quantity,
+    };
+    setCartItems((state) => [...state, productToAdd]);
+  }
+
+  function changeCartItemQuantity(cartItemId: number, type: "increase" | "decrease") {
+    const newCart = produce(cartItems, (draft) => {
+      const ProductAlreadyExistsInCart = cartItems.findIndex(
+        (cartItem) => cartItem.id === cartItemId
+      );
+      if (ProductAlreadyExistsInCart >= 0) {
+        const item = draft[ProductAlreadyExistsInCart];
+        draft[ProductAlreadyExistsInCart].quantity = type === "increase" ? item.quantity + 1 : item.quantity - 1;
+      }
+    });
+    setCartItems(newCart);
   }
 
   function removeProductFromCart(productId: number){
@@ -57,19 +76,6 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
   function checkIfProductAlreadyInCart(productId: number){
     return cartItems.some((product) => product.id === productId);
-  }
-
-  function changeCartItemQuantity(cartItemId: number, type: "increase" | "decrease") {
-    const newCart = produce(cartItems, (draft) => {
-      const coffeeExistsInCart = cartItems.findIndex(
-        (cartItem) => cartItem.id === cartItemId
-      );
-      if (coffeeExistsInCart >= 0) {
-        const item = draft[coffeeExistsInCart];
-        draft[coffeeExistsInCart].quantity = type === "increase" ? item.quantity + 1 : item.quantity - 1;
-      }
-    });
-    setCartItems(newCart);
   }
 
   function clearCart(){

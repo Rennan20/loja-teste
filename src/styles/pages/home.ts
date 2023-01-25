@@ -6,6 +6,14 @@ margin: 100px auto;
 display: grid;
 grid-template-columns: repeat(4, 1fr);
 gap: 1rem;
+
+@media (max-width: 1100px){
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 580px){
+  grid-template-columns: 1fr;
+}
 `
 
 export const ProductContainer = styled.div`
