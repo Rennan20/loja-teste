@@ -3,6 +3,7 @@ import { IProduct } from "@/context/CartContext";
 import { useCart } from "@/hooks/useCart";
 import { DescriptionContainer, HomeContainer, ProductContainer } from "@/styles/pages/home";
 import { GetStaticProps } from "next";
+import Head from "next/head";
 import Image from "next/image";
 
 interface HomeProps{
@@ -18,6 +19,10 @@ export default function Home({products}: HomeProps) {
     });
   };
   return (
+    <>
+    <Head>
+      <title>MKS Shop</title>
+    </Head>
     <HomeContainer>
       {
         products.map((product: IProduct) => (
@@ -35,6 +40,7 @@ export default function Home({products}: HomeProps) {
         ))
       }
     </HomeContainer>
+    </>
   )
 }
 

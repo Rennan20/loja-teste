@@ -10,7 +10,7 @@ export default function Sucess(){
   return(
     <>
       <Head>
-        <title>Compra efetuada | Next Shop</title>
+        <title>Compra efetuada | MKS Shop</title>
         <meta name="robots" content="noindex" />
       </Head>
       <SucessContainer>
