@@ -12,9 +12,9 @@ export const GlobalStyles = createGlobalStyle`
   };
   body, input textarea, button{
     font-family: Montserrat;
-    font-weight: 400;
+    font-weight: 300;
   };
   button {
     cursor: pointer;
   }
-`
+`;
